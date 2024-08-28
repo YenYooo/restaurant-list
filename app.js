@@ -24,10 +24,11 @@ app.get("/restaurants", (req, res) => {
   res.render("index", { restaurants: restaurants});
 });
 
-// 用 params 做動態路由
+// 用 params 做動態路由 -> 新增會顯示 detail.hbs 頁面的路由
 app.get("/restaurant/:id", (req, res) => {
   const id = req.params.id;
-  res.send(`read restaurant: ${id}`);
+  const restaurant = restaurants.find((rs) => rs.id.toString() === id)
+  res.render('detail', { restaurant });
 });
 
 // 啟動伺服器
