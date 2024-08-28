@@ -2,14 +2,14 @@ const express = require("express"); // 載入 Express
 const { engine } = require("express-handlebars"); // 載入 Express-handlebars
 const app = express();
 const port = 3000; // 設定連接埠
-const restaurants = require('./public/jsons/restaurant.json').results // 陣列包在 results 屬性中
+const restaurants = require("./public/jsons/restaurant.json").results; // 陣列包在 results 屬性中
 // const BASE_IMG_URL =
 //   "https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/";
 
 // 告訴 Express 把樣本引擎交給 Express-handlebars
-app.engine('.hbs', engine({ extname: '.hbs'}))
-app.set('view engine', '.hbs')
-app.set('views', './views')
+app.engine(".hbs", engine({ extname: ".hbs" }));
+app.set("view engine", ".hbs");
+app.set("views", "./views");
 
 // 將 restaurant.json 載入 Express 中
 app.use(express.static("public"));
@@ -19,16 +19,22 @@ app.get("/", (req, res) => {
   res.redirect("/restaurants");
 });
 
-// 設定首頁路由 -> 修改成渲染 index.hbs 的內容
+// 設定首頁路由 -> 修改成渲染 index.hbs 的內容 -> 新增餐廳名稱和餐廳類別關鍵字搜尋
 app.get("/restaurants", (req, res) => {
-  res.render("index", { restaurants: restaurants});
+  const keyword = (req.query.keyword || '').trim().toLowerCase()
+  const matchedRestaurants = keyword ? restaurants.filter(
+    (rs) => 
+      rs.name.toLowerCase().includes(keyword) ||
+      rs.category.toLowerCase().includes(keyword)
+  ) : restaurants
+  res.render("index", { restaurants: matchedRestaurants, keyword });
 });
 
 // 用 params 做動態路由 -> 新增會顯示 detail.hbs 頁面的路由
 app.get("/restaurant/:id", (req, res) => {
   const id = req.params.id;
-  const restaurant = restaurants.find((rs) => rs.id.toString() === id)
-  res.render('detail', { restaurant });
+  const restaurant = restaurants.find((rs) => rs.id.toString() === id);
+  res.render("detail", { restaurant });
 });
 
 // 啟動伺服器
