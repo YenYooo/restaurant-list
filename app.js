@@ -4,6 +4,9 @@ const app = express()
 // 設定連接埠
 const port = 3000
 
+// 將 restaurant.json 載入 Express 中
+app.subscribe(express.static('public'))
+
 // 將網站首頁從根目錄(/)重定位到餐廳清單(/restaurants)
 app.get('/', (req, res) => {
   res.redirect('/restaurants')
