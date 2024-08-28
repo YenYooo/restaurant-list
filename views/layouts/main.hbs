@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{!-- 載入 Bootstrap 的 CSS 檔案 --}}
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  {{!-- 連結自己寫的 CSS 檔案 --}}
+  <link rel="stylesheet" href="/stylesheets/indexstyle.css">
   <title>Document</title>
 </head>
 <body>
   {{!-- 把局部樣版內容 index.hbs 放在這裡顯示 --}}
-  {{{body}}} 
-
+  {{{body}}}
+  {{!-- 載入 Bootstrap 的 Javascript 檔案 --}}
+  <script src="/javascripts/bootstrap.bundle.min.js"></script>
+  {{!-- 連結 Font Awesome 的 icon --}}
+  <script src="https://kit.fontawesome.com/83682de554.js" crossorigin="anonymous"></script>
 </body>
 </html>

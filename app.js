@@ -2,6 +2,9 @@ const express = require("express"); // 載入 Express
 const { engine } = require("express-handlebars"); // 載入 Express-handlebars
 const app = express();
 const port = 3000; // 設定連接埠
+const restaurants = require('./public/jsons/restaurant.json').results // 陣列包在 results 屬性中
+// const BASE_IMG_URL =
+//   "https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/";
 
 // 告訴 Express 把樣本引擎交給 Express-handlebars
 app.engine('.hbs', engine({ extname: '.hbs'}))
@@ -18,7 +21,7 @@ app.get("/", (req, res) => {
 
 // 設定首頁路由 -> 修改成渲染 index.hbs 的內容
 app.get("/restaurants", (req, res) => {
-  res.render("index");
+  res.render("index", { restaurants: restaurants});
 });
 
 // 用 params 做動態路由
